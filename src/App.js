@@ -9,7 +9,7 @@ function App() {
                 <div className={classes.previous__operand}>123</div>
                 <div className={classes.current__operand}>456</div>
             </div>
-            <button>DEL</button>
+            <button>AC</button>
             <button>%</button>
             <button>/</button>
             <button>*</button>
