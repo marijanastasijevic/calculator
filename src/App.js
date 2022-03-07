@@ -6,16 +6,20 @@ import { useReducer } from 'react';
 import { actions } from './actions.js';
 import DigitButton from './DigitButton';
 import DigitButtonTwo from './DigitButtonTwo';
+import OperationButton from './OperationButton';
 
 const reducer = (state, {type, payload}) => {
     switch(type) {
         case actions.enter_digit:
             return{
                 ...state,
-                newOperand: `${state.newOperand || ""}${payload}`,
+                newOperand: `${state.newOperand}${payload}`,
             };
         case actions.choose_operation:
-            return;
+            return{
+                ...state,
+                newOperand: `${state.newOperand}${payload}`
+            };
         case actions.delete_all:
             return;
         case actions.calculate:
@@ -28,7 +32,7 @@ const reducer = (state, {type, payload}) => {
 }
 
 function App() {
-    const [{newOperand, prevOperand, operation}, dispatch]= useReducer(reducer, {});
+    const [{newOperand, prevOperand, operation}, dispatch]= useReducer(reducer, {newOperand: '', prevOperand: '', operation: ''});
 
     return(
         <div className={classes.calculator__grid}>
@@ -37,17 +41,17 @@ function App() {
                 <div className={classes.current__operand}>{newOperand}</div>
             </div>
             <button>AC</button>
-            <DigitButton onClickClb={dispatch} digit='%'/>
-            <button>/</button>
-            <button>*</button>
+            <OperationButton onClickClb={dispatch} operation='%'/>
+            <OperationButton onClickClb={dispatch} operation='/'/>
+            <OperationButton onClickClb={dispatch} operation='*'/>
             <DigitButton onClickClb={dispatch} digit='7' />
             <DigitButton onClickClb={dispatch} digit='8' />
             <DigitButton onClickClb={dispatch} digit='9' />
-            <button>-</button>
+            <OperationButton onClickClb={dispatch} operation='-'/>
             <DigitButton onClickClb={dispatch} digit='4' />
             <DigitButton onClickClb={dispatch} digit='5' />
             <DigitButton onClickClb={dispatch} digit='6' />
-            <button>+</button>
+            <OperationButton onClickClb={dispatch} operation='+'/>
             <DigitButton onClickClb={dispatch} digit='1' />
             <DigitButton onClickClb={dispatch} digit='2' />
             <DigitButton onClickClb={dispatch} digit='3' />
