@@ -8,9 +8,33 @@ import DigitButton from './DigitButton';
 import DigitButtonTwo from './DigitButtonTwo';
 import OperationButton from './OperationButton';
 
+
+const isNotZeroOrDot = (input) => {
+    if(input === '0' || input === '.'){
+        return false;
+    }
+    return true;
+};
+
 const reducer = (state, {type, payload}) => {
     switch(type) {
         case actions.enter_digit:
+            if(state.newOperand === '0' && payload === '0'){
+                return{
+                    ...state
+                } 
+            }
+            if(state.newOperand === '0' && isNotZeroOrDot(payload)){
+                return{
+                    ...state,
+                    newOperand: `${payload}`
+                }
+            }
+            if(state.newOperand.includes('.') && payload === '.'){
+                return{
+                    ...state
+                }
+            }
             return{
                 ...state,
                 newOperand: `${state.newOperand}${payload}`,
