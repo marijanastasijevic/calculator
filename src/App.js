@@ -16,6 +16,27 @@ const isNotZeroOrDot = (input) => {
     return true;
 };
 
+const calculate = (firstOp, operation, secondOp) => {
+    if(firstOp === ''){
+        return secondOp;
+    }
+    switch(operation){
+        case '%':
+            return Number(firstOp) % Number(secondOp);
+        case '/':
+            return Number(firstOp) / Number(secondOp);
+        case '*':
+            return Number(firstOp) * Number(secondOp);
+        case '-':
+            return Number(firstOp) - Number(secondOp);
+        case '+':
+            return Number(firstOp) + Number(secondOp);
+        default:
+            console.log('Unknown operation');
+            return;
+    }
+}
+
 const reducer = (state, {type, payload}) => {
     switch(type) {
         case actions.enter_digit:
@@ -40,9 +61,17 @@ const reducer = (state, {type, payload}) => {
                 newOperand: `${state.newOperand}${payload}`,
             };
         case actions.choose_operation:
+            if(state.newOperand === ''){
+                return {
+                    ...state,
+                    operation: `${payload}`
+                }
+            }
             return{
                 ...state,
-                newOperand: `${state.newOperand}${payload}`
+                prevOperand: `${calculate(state.prevOperand, state.operation, state.newOperand)}`,
+                operation: `${payload}`,
+                newOperand: '',
             };
         case actions.delete_all:
             return;
@@ -56,7 +85,7 @@ const reducer = (state, {type, payload}) => {
 }
 
 function App() {
-    const [{newOperand, prevOperand, operation}, dispatch]= useReducer(reducer, {newOperand: '', prevOperand: '', operation: ''});
+    const [{newOperand, prevOperand, operation}, dispatch]= useReducer(reducer, {newOperand: '0', prevOperand: '', operation: ''});
 
     return(
         <div className={classes.calculator__grid}>
