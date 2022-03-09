@@ -51,14 +51,3 @@ body {
 .calculator__grid button:focus {
     background-color: rgba(255, 255, 255, 0.822);
 }
-
-.span__two__column{
-  grid-column: span 2;  
-}
-
-.span__two__row{
-    grid-row: span 2;
-    background-color: #ca6e8d;
-}
-
-
