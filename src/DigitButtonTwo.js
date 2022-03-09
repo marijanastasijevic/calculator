@@ -1,6 +1,6 @@
 import { actions } from './actions.js';
 
-import classes from './App.module.css'
+import classes from './DigitButtonTwo.module.css';
 
 const DigitButtonTwo = ({onClickClb, digit}) => {
     return (

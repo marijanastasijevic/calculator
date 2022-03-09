@@ -8,6 +8,7 @@ import DigitButton from './DigitButton';
 import DigitButtonTwo from './DigitButtonTwo';
 import OperationButton from './OperationButton';
 import ACButton from './ACButton';
+import EqualButton from './EqualButton'
 
 
 
@@ -84,7 +85,12 @@ const reducer = (state, {type, payload}) => {
             
             }
         case actions.calculate:
-            return;
+            return{
+                ...state,
+                newOperand: `${calculate(state.prevOperand, state.operation, state.newOperand)}`,
+                prevOperand: '',
+                operation: ''
+            };
         default:
             console.log('Unknown action');
             return;
@@ -116,7 +122,7 @@ function App() {
             <DigitButton onClickClb={dispatch} digit='1' />
             <DigitButton onClickClb={dispatch} digit='2' />
             <DigitButton onClickClb={dispatch} digit='3' />
-            <button className={classes.span__two__row}>=</button>
+            <EqualButton onClickClb={dispatch} equal='='/>
             <DigitButtonTwo onClickClb={dispatch} digit='0'/>
             <DigitButton onClickClb={dispatch} digit='.' />
                
