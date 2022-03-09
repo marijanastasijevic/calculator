@@ -7,6 +7,8 @@ import { actions } from './actions.js';
 import DigitButton from './DigitButton';
 import DigitButtonTwo from './DigitButtonTwo';
 import OperationButton from './OperationButton';
+import ACButton from './ACButton';
+
 
 
 const isNotZeroOrDot = (input) => {
@@ -74,7 +76,13 @@ const reducer = (state, {type, payload}) => {
                 newOperand: '',
             };
         case actions.delete_all:
-            return;
+            return{
+                ...state,
+                newOperand: '0',
+                prevOperand: '',
+                operation: '',
+            
+            }
         case actions.calculate:
             return;
         default:
@@ -93,7 +101,7 @@ function App() {
                 <div className={classes.previous__operand}>{prevOperand}{operation}</div>
                 <div className={classes.current__operand}>{newOperand}</div>
             </div>
-            <button>AC</button>
+            <ACButton onClickClb={dispatch} deleteAll='AC'/>
             <OperationButton onClickClb={dispatch} operation='%'/>
             <OperationButton onClickClb={dispatch} operation='/'/>
             <OperationButton onClickClb={dispatch} operation='*'/>
